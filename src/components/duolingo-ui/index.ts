@@ -7,3 +7,4 @@ export { default as DuoCharacter } from './DuoCharacter';
 export { default as DuoLessonCard } from './DuoLessonCard';
 export { default as DuoInput } from './DuoInput';
 export { default as DuoSelect } from './DuoSelect';
+export { default as DuoNavbar } from './DuoNavbar';

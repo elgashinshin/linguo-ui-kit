@@ -1,142 +1,116 @@
 
 import React, { useState } from 'react';
-import { Mail, Lock, Eye, EyeOff, User } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { DuoInput, DuoButton, DuoSelect, DuoCharacter } from '@/components/duolingo-ui';
-import { useNavigate } from 'react-router-dom';
-import { useToast } from '@/components/ui/use-toast';
+import { Mail, Lock, User } from 'lucide-react';
 
 const Auth = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  const [showPassword, setShowPassword] = useState(false);
+  const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [language, setLanguage] = useState('');
-  const navigate = useNavigate();
-  const { toast } = useToast();
-  
-  const languageOptions = [
-    { value: 'en', label: 'English' },
-    { value: 'es', label: 'Spanish' },
-    { value: 'fr', label: 'French' },
-    { value: 'de', label: 'German' },
-    { value: 'ru', label: 'Russian' },
-  ];
+
+  const toggleAuthMode = () => {
+    setAuthMode(authMode === 'login' ? 'signup' : 'login');
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // This is a mock authentication - would be replaced with actual auth logic
-    if (isLogin) {
-      // Login logic would go here
-      toast({
-        title: "Login Successful",
-        description: "Welcome back!",
-      });
-      navigate('/');
-    } else {
-      // Sign up logic would go here
-      toast({
-        title: "Account Created",
-        description: "Your account has been created successfully!",
-      });
-      navigate('/');
-    }
+    console.log('Form submitted:', { email, password, name, language });
   };
 
-  const toggleAuthMode = () => {
-    setIsLogin(!isLogin);
-    setEmail('');
-    setPassword('');
-    setName('');
-    setLanguage('');
-  };
+  const languageOptions = [
+    { value: 'english', label: 'English' },
+    { value: 'spanish', label: 'Spanish' },
+    { value: 'french', label: 'French' },
+    { value: 'german', label: 'German' },
+    { value: 'japanese', label: 'Japanese' },
+    { value: 'korean', label: 'Korean' },
+    { value: 'russian', label: 'Russian' },
+  ];
 
   return (
     <div className="min-h-screen bg-duo-softBlue flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <div className="mb-8 flex justify-center">
-          <DuoCharacter character="duo" size="xl" />
-        </div>
-        
-        <div className="duo-card bg-white p-8 rounded-3xl shadow-duo mb-6">
-          <h1 className="text-2xl font-bold text-center mb-6">
-            {isLogin ? 'Log in to Duolingo' : 'Create your profile'}
+      <div className="max-w-md w-full">
+        <div className="mb-8 flex flex-col items-center">
+          <Link to="/" className="text-3xl font-extrabold text-duo-green mb-4">
+            Duo<span className="text-duo-purple">lingo</span>
+          </Link>
+          <h1 className="text-2xl font-bold mb-2">
+            {authMode === 'login' ? 'Welcome back!' : 'Create an account'}
           </h1>
+          <p className="text-gray-600 text-center">
+            {authMode === 'login' 
+              ? 'Log in to continue your language journey' 
+              : 'Join millions of people learning languages for free'}
+          </p>
+        </div>
+
+        <div className="duo-card relative overflow-hidden">
+          <div className="absolute -top-6 right-4">
+            <DuoCharacter type="duo" size="xl" />
+          </div>
           
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {!isLogin && (
+          <form onSubmit={handleSubmit} className="space-y-4 mt-12">
+            {authMode === 'signup' && (
               <>
-                <DuoInput
-                  label="Name"
-                  placeholder="Enter your name"
+                <DuoInput 
+                  label="Full Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  fullWidth
-                  icon={<User size={20} />}
+                  placeholder="Enter your name"
+                  icon={<User />}
                 />
-                
-                <DuoSelect
-                  label="Learning language"
+                <DuoSelect 
+                  label="Language to Learn"
                   options={languageOptions}
-                  placeholder="Choose a language"
                   value={language}
-                  onValueChange={setLanguage}
-                  fullWidth
+                  onChange={setLanguage}
+                  placeholder="Choose a language"
                 />
               </>
             )}
             
-            <DuoInput
+            <DuoInput 
               label="Email"
               type="email"
-              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
-              fullWidth
-              icon={<Mail size={20} />}
+              placeholder="Enter your email"
+              icon={<Mail />}
             />
             
-            <DuoInput
+            <DuoInput 
               label="Password"
-              type={showPassword ? 'text' : 'password'}
-              placeholder="Enter your password"
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
-              fullWidth
-              icon={<Lock size={20} />}
-              iconPosition="left"
-              className="relative"
-              hint={isLogin ? "" : "At least 8 characters with letters and numbers"}
+              placeholder="Enter your password"
+              icon={<Lock />}
             />
             
-            <button
-              type="button"
-              className="absolute right-12 top-[46%] text-gray-500 hover:text-gray-700 focus:outline-none"
-              onClick={() => setShowPassword(!showPassword)}
-              aria-label={showPassword ? "Hide password" : "Show password"}
+            <DuoButton 
+              variant="primary" 
+              fullWidth 
+              type="submit"
+              className="mt-8"
             >
-              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-            </button>
-            
-            <DuoButton type="submit" variant="primary" fullWidth size="lg">
-              {isLogin ? 'Log in' : 'Create account'}
+              {authMode === 'login' ? 'Log In' : 'Sign Up'}
             </DuoButton>
           </form>
-        </div>
-        
-        <div className="text-center">
-          <p className="mb-4 text-gray-700">
-            {isLogin ? "Don't have an account?" : "Already have an account?"}
-          </p>
-          <DuoButton
-            variant="neutral"
-            onClick={toggleAuthMode}
-          >
-            {isLogin ? 'Sign up' : 'Log in'}
-          </DuoButton>
+          
+          <div className="mt-6 text-center">
+            <p className="text-gray-600">
+              {authMode === 'login' ? "Don't have an account?" : "Already have an account?"}
+              <button 
+                onClick={toggleAuthMode} 
+                className="ml-1 text-duo-blue font-bold hover:underline"
+              >
+                {authMode === 'login' ? 'Sign Up' : 'Log In'}
+              </button>
+            </p>
+          </div>
         </div>
       </div>
     </div>
