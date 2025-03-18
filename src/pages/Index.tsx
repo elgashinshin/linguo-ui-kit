@@ -1,18 +1,21 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   DuoButton, 
   DuoCard, 
   DuoProgress, 
   DuoBadge, 
   DuoCharacter,
-  DuoLessonCard 
+  DuoLessonCard,
+  DuoInput,
+  DuoSelect
 } from '@/components/duolingo-ui';
-import { Heart, Flag, MessageCircle, Book, Star, Check, X } from 'lucide-react';
+import { Heart, Flag, MessageCircle, Book, Star, Check, X, Search, Mail, Globe, User, Lock } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
   const { toast } = useToast();
+  const [inputValue, setInputValue] = useState("");
+  const [selectValue, setSelectValue] = useState("");
 
   const showToast = (message: string) => {
     toast({
@@ -20,6 +23,15 @@ const Index = () => {
       description: message,
     });
   };
+
+  const languageOptions = [
+    { value: "es", label: "Spanish" },
+    { value: "fr", label: "French" },
+    { value: "de", label: "German" },
+    { value: "it", label: "Italian" },
+    { value: "ja", label: "Japanese" },
+    { value: "ko", label: "Korean" },
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4 md:px-8">
@@ -33,6 +45,97 @@ const Index = () => {
         <section>
           <div className="flex justify-center mb-8">
             <DuoCharacter size="xl" animate mood="happy" />
+          </div>
+        </section>
+
+        {/* Input and Select Section */}
+        <section className="bg-white rounded-2xl p-8 shadow-md">
+          <h2 className="text-2xl font-bold mb-6 text-duo-darkBlue">Forms</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-6">
+              <h3 className="text-xl font-semibold text-duo-darkBlue">Inputs</h3>
+              
+              <DuoInput 
+                label="Email Address"
+                placeholder="Enter your email"
+                type="email"
+                icon={<Mail size={18} />}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+              
+              <DuoInput 
+                label="Search"
+                placeholder="Search lessons"
+                icon={<Search size={18} />}
+              />
+              
+              <DuoInput 
+                label="Password"
+                type="password"
+                icon={<Lock size={18} />}
+                placeholder="Enter password"
+                error="Password must be at least 8 characters"
+              />
+              
+              <DuoInput 
+                label="Username"
+                icon={<User size={18} />}
+                placeholder="Your username"
+                hint="Choose a unique username"
+              />
+              
+              <DuoInput 
+                label="Disabled Input"
+                disabled
+                placeholder="This input is disabled"
+              />
+            </div>
+            
+            <div className="space-y-6">
+              <h3 className="text-xl font-semibold text-duo-darkBlue">Selects</h3>
+              
+              <DuoSelect
+                label="Language"
+                options={languageOptions}
+                icon={<Globe size={18} />}
+                placeholder="Choose a language"
+                value={selectValue}
+                onValueChange={setSelectValue}
+              />
+              
+              <DuoSelect
+                label="Level"
+                options={[
+                  { value: "beginner", label: "Beginner" },
+                  { value: "intermediate", label: "Intermediate" },
+                  { value: "advanced", label: "Advanced" },
+                ]}
+                placeholder="Select your level"
+              />
+              
+              <DuoSelect
+                label="Select with Error"
+                options={languageOptions}
+                placeholder="Choose language"
+                error="Please select a language"
+              />
+              
+              <DuoSelect
+                label="Select with Hint"
+                options={languageOptions}
+                placeholder="Choose language"
+                hint="This will be your learning language"
+              />
+              
+              <DuoSelect
+                label="Disabled Select"
+                options={languageOptions}
+                disabled
+                placeholder="This select is disabled"
+              />
+            </div>
           </div>
         </section>
 
