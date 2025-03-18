@@ -49,7 +49,7 @@ const Auth = () => {
 
         <div className="duo-card relative overflow-hidden">
           <div className="absolute -top-6 right-4">
-            <DuoCharacter type="duo" size="xl" />
+            <DuoCharacter size="xl" mood="happy" />
           </div>
           
           <form onSubmit={handleSubmit} className="space-y-4 mt-12">
@@ -66,7 +66,7 @@ const Auth = () => {
                   label="Language to Learn"
                   options={languageOptions}
                   value={language}
-                  onChange={setLanguage}
+                  onValueChange={setLanguage}
                   placeholder="Choose a language"
                 />
               </>

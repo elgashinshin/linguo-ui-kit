@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from "@/lib/utils";
 import { Home, BookOpen, Trophy, User, Menu, X } from 'lucide-react';
-import { DuoButton } from './DuoButton';
+import DuoButton from './DuoButton';
 
 interface NavItem {
   name: string;
