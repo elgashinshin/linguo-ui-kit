@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -52,15 +53,15 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
+				duo: {
+					green: "#58CC02",
+					lightGreen: "#89E219",
+					purple: "#CE82FF",
+					orange: "#FF9600",
+					red: "#FF4B4B",
+					blue: "#1CB0F6",
+					yellow: "#FFC800",
+					darkBlue: "#084482",
 				}
 			},
 			borderRadius: {
@@ -84,11 +85,36 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'bounce-small': {
+					'0%, 100%': {
+						transform: 'translateY(0)',
+					},
+					'50%': {
+						transform: 'translateY(-5px)',
+					},
+				},
+				'wiggle': {
+					'0%, 100%': {
+						transform: 'rotate(-3deg)',
+					},
+					'50%': {
+						transform: 'rotate(3deg)',
+					},
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'bounce-small': 'bounce-small 1s ease-in-out infinite',
+				'wiggle': 'wiggle 1s ease-in-out infinite',
+			},
+			fontFamily: {
+				'nunito': ['Nunito', 'sans-serif'],
+			},
+			boxShadow: {
+				'duo': '0 2px 0 0 rgba(0, 0, 0, 0.2)',
+				'duo-hover': '0 4px 0 0 rgba(0, 0, 0, 0.2)',
 			}
 		}
 	},
