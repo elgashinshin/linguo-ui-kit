@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from "@/lib/utils";
 import {
@@ -22,6 +21,7 @@ interface DuoSelectProps extends React.ComponentPropsWithoutRef<typeof Select> {
   placeholder?: string;
   fullWidth?: boolean;
   icon?: React.ReactNode;
+  className?: string;
 }
 
 const DuoSelect = ({
