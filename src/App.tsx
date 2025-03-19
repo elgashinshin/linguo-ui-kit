@@ -9,7 +9,9 @@ import Auth from "./pages/Auth";
 import CreateFlashcards from "./pages/Flashcards/CreateFlashcards";
 import FlashcardPractice from "./pages/Flashcards/FlashcardPractice";
 import TranslationPractice from "./pages/Flashcards/TranslationPractice";
-import NotFound from "./pages/NotFound";
+import NotFound from "./pages/Error/NotFound";
+import Forbidden from "./pages/Error/Forbidden";
+import ErrorPage from "./pages/Error/ErrorPage";
 import DuoNavbar from "./components/duolingo-ui/DuoNavbar";
 
 const queryClient = new QueryClient();
@@ -28,6 +30,8 @@ const App = () => (
             <Route path="/create-flashcards" element={<CreateFlashcards />} />
             <Route path="/flashcard-practice" element={<FlashcardPractice />} />
             <Route path="/translation-practice" element={<TranslationPractice />} />
+            <Route path="/error" element={<ErrorPage />} />
+            <Route path="/forbidden" element={<Forbidden />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

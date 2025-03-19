@@ -14,8 +14,9 @@ import {
   DuoText,
   DuoHeading
 } from '@/components/duolingo-ui';
-import { Heart, Flag, MessageCircle, Book, Star, Check, X, Search, Mail, Globe, User, Lock, Plus, Minus, Save } from 'lucide-react';
+import { Heart, Flag, MessageCircle, Book, Star, Check, X, Search, Mail, Globe, User, Lock, Plus, Minus, Save, Link, ChevronRight, ArrowRight, Edit } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
+import { Link as RouterLink } from 'react-router-dom';
 
 const Index = () => {
   const { toast } = useToast();
@@ -196,7 +197,7 @@ const Index = () => {
             </DuoButton>
           </div>
 
-          <DuoHeading level={3} size="md" className="mt-8 mb-4">New Button Variants</DuoHeading>
+          <DuoHeading level={3} size="md" className="mt-8 mb-4">Button Variants</DuoHeading>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <DuoButton size="xs" onClick={() => showToast("Extra small button clicked!")}>
               Extra Small Button
@@ -215,6 +216,49 @@ const Index = () => {
             <DuoButton variant="danger" iconOnly icon={<Minus size={16} />} onClick={() => showToast("Icon only button clicked!")} />
             
             <DuoButton variant="success" iconOnly size="sm" icon={<Save size={14} />} onClick={() => showToast("Small icon only button clicked!")} />
+          </div>
+
+          <DuoHeading level={3} size="md" className="mt-8 mb-4">Additional Button Styles</DuoHeading>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <DuoButton variant="primary" size="xs" padding="compact" onClick={() => showToast("XS compact button clicked!")}>
+              XS Compact
+            </DuoButton>
+            
+            <DuoButton variant="secondary" size="sm" padding="compact" icon={<ChevronRight size={14} />} onClick={() => showToast("SM compact with icon clicked!")}>
+              SM Compact with Icon
+            </DuoButton>
+            
+            <DuoButton variant="success" padding="compact" icon={<ArrowRight size={16} />} onClick={() => showToast("MD compact with icon clicked!")}>
+              MD Compact with Icon
+            </DuoButton>
+            
+            <DuoButton variant="warning" size="lg" padding="compact" onClick={() => showToast("LG compact button clicked!")}>
+              LG Compact
+            </DuoButton>
+            
+            <DuoButton variant="neutral" size="xs" icon={<Edit size={12} />} iconPosition="right" padding="compact" onClick={() => showToast("XS compact with right icon clicked!")}>
+              XS Right Icon
+            </DuoButton>
+            
+            <RouterLink to="/error">
+              <DuoButton variant="danger" padding="compact">
+                Error Page
+              </DuoButton>
+            </RouterLink>
+          </div>
+          
+          <div className="mt-4 flex gap-4">
+            <RouterLink to="/forbidden">
+              <DuoButton variant="warning" padding="compact">
+                Forbidden Page
+              </DuoButton>
+            </RouterLink>
+            
+            <RouterLink to="/non-existent-page">
+              <DuoButton variant="neutral" padding="compact">
+                404 Page
+              </DuoButton>
+            </RouterLink>
           </div>
         </section>
 
@@ -251,6 +295,13 @@ const Index = () => {
                 disabled
                 checked={true}
               />
+
+              <div className="flex items-center space-x-4">
+                <DuoCheckbox checked={true} />
+                <DuoCheckbox checked={false} />
+                <DuoCheckbox checked={true} disabled />
+                <DuoCheckbox checked={false} disabled />
+              </div>
             </div>
             
             <div className="space-y-6">
