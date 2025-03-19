@@ -139,20 +139,18 @@ const CreateFlashcards = () => {
                     <DuoButton 
                       variant="success" 
                       size="sm" 
+                      iconOnly
                       icon={<Save size={16} />}
                       onClick={saveEditing}
-                    >
-                      Save
-                    </DuoButton>
+                    />
                     
                     <DuoButton 
                       variant="neutral" 
                       size="sm" 
+                      iconOnly
                       icon={<X size={16} />}
                       onClick={cancelEditing}
-                    >
-                      Cancel
-                    </DuoButton>
+                    />
                   </div>
                 </div>
               ) : (
@@ -171,6 +169,7 @@ const CreateFlashcards = () => {
                     <DuoButton 
                       variant="neutral" 
                       size="xs" 
+                      iconOnly
                       icon={<Edit size={16} />}
                       onClick={() => startEditing(card)}
                     />
@@ -178,6 +177,7 @@ const CreateFlashcards = () => {
                     <DuoButton 
                       variant="danger" 
                       size="xs" 
+                      iconOnly
                       icon={<Trash2 size={16} />}
                       onClick={() => handleDeleteFlashcard(card.id)}
                     />

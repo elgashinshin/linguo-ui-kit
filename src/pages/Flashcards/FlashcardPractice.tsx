@@ -79,11 +79,11 @@ const FlashcardPractice = () => {
   };
 
   const handleTouchEnd = () => {
-    if (touchStart - touchEnd > 100) {
-      // Swiped left
+    if (touchStart - touchEnd > 75) {
+      // Swiped left - reduced threshold for easier swiping
       handleSwipe('left');
-    } else if (touchEnd - touchStart > 100) {
-      // Swiped right
+    } else if (touchEnd - touchStart > 75) {
+      // Swiped right - reduced threshold for easier swiping
       handleSwipe('right');
     }
   };
@@ -103,11 +103,11 @@ const FlashcardPractice = () => {
 
   const handleMouseUp = () => {
     if (isDragging) {
-      if (dragOffsetX < -100) {
-        // Dragged left
+      if (dragOffsetX < -75) {
+        // Dragged left - reduced threshold
         handleSwipe('left');
-      } else if (dragOffsetX > 100) {
-        // Dragged right
+      } else if (dragOffsetX > 75) {
+        // Dragged right - reduced threshold
         handleSwipe('right');
       }
       setIsDragging(false);
@@ -190,7 +190,7 @@ const FlashcardPractice = () => {
       >
         <div 
           className={cn(
-            "relative w-full h-full transition-all duration-500 cursor-pointer",
+            "relative w-full h-full transition-all duration-500 cursor-pointer select-none",
             isFlipped ? '[transform:rotateY(180deg)]' : ''
           )}
           onClick={handleFlip}
@@ -214,7 +214,6 @@ const FlashcardPractice = () => {
               direction === 'left' ? 'swipe-left' : 
               direction === 'right' ? 'swipe-right' : ''
             )}
-            style={{ backfaceVisibility: "hidden" }}
           >
             <DuoCard 
               className="flex flex-col justify-center items-center h-full p-8"
@@ -236,7 +235,6 @@ const FlashcardPractice = () => {
               isFlipped ? '' : 'invisible'
             )}
             style={{ 
-              backfaceVisibility: "hidden",
               transform: "rotateY(180deg)"
             }}
           >
@@ -258,6 +256,7 @@ const FlashcardPractice = () => {
       <style>
         {`
         .backface-hidden {
+          -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
         }
         @keyframes swipeLeft {
