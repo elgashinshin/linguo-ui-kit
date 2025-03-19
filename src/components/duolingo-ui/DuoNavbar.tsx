@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from "@/lib/utils";
-import { Home, BookOpen, Trophy, User, Menu, X } from 'lucide-react';
+import { Home, BookOpen, Trophy, User, Menu, X, Bookmark, Book, Pen } from 'lucide-react';
 import DuoButton from './DuoButton';
 
 interface NavItem {
@@ -18,6 +18,9 @@ const DuoNavbar = () => {
   const navItems: NavItem[] = [
     { name: 'Home', path: '/', icon: <Home className="w-5 h-5" /> },
     { name: 'Lessons', path: '/lessons', icon: <BookOpen className="w-5 h-5" /> },
+    { name: 'Flashcards', path: '/flashcard-practice', icon: <Book className="w-5 h-5" /> },
+    { name: 'Translation', path: '/translation-practice', icon: <Bookmark className="w-5 h-5" /> },
+    { name: 'Create Cards', path: '/create-flashcards', icon: <Pen className="w-5 h-5" /> },
     { name: 'Achievements', path: '/achievements', icon: <Trophy className="w-5 h-5" /> },
     { name: 'Profile', path: '/profile', icon: <User className="w-5 h-5" /> },
   ];
@@ -36,7 +39,7 @@ const DuoNavbar = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex space-x-6">
             {navItems.map((item) => (
               <Link
                 key={item.name}

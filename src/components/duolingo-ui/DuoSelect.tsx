@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { cn } from "@/lib/utils";
 import {
@@ -38,7 +39,7 @@ const DuoSelect = ({
 }: DuoSelectProps) => {
   return (
     <div className={cn(
-      'duo-select w-full max-w-sm',
+      'duo-select w-full',
       fullWidth && 'max-w-full',
       className
     )}>

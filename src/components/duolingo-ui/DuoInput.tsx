@@ -25,7 +25,7 @@ const DuoInput = ({
 }: DuoInputProps) => {
   return (
     <div className={cn(
-      'duo-input w-full max-w-sm',
+      'duo-input w-full',
       fullWidth && 'max-w-full',
       className
     )}>
@@ -44,7 +44,7 @@ const DuoInput = ({
         
         <Input
           className={cn(
-            "border-2 rounded-xl transition-all duration-200 bg-white text-base",
+            "border-2 rounded-xl transition-all duration-200 bg-white text-base h-12",
             "focus-visible:ring-duo-green focus-visible:border-duo-green focus-visible:ring-opacity-50",
             "disabled:bg-gray-100 disabled:border-gray-200 disabled:text-gray-400",
             error ? "border-duo-red focus-visible:ring-duo-red focus-visible:border-duo-red" : "border-gray-300",
