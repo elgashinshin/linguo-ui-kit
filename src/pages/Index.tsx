@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { 
   DuoButton, 
@@ -7,15 +8,21 @@ import {
   DuoCharacter,
   DuoLessonCard,
   DuoInput,
-  DuoSelect
+  DuoSelect,
+  DuoCheckbox,
+  DuoRadio,
+  DuoText,
+  DuoHeading
 } from '@/components/duolingo-ui';
-import { Heart, Flag, MessageCircle, Book, Star, Check, X, Search, Mail, Globe, User, Lock } from 'lucide-react';
+import { Heart, Flag, MessageCircle, Book, Star, Check, X, Search, Mail, Globe, User, Lock, Plus, Minus, Save } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
   const { toast } = useToast();
   const [inputValue, setInputValue] = useState("");
   const [selectValue, setSelectValue] = useState("");
+  const [checkboxValue, setCheckboxValue] = useState(false);
+  const [radioValue, setRadioValue] = useState("option1");
 
   const showToast = (message: string) => {
     toast({
@@ -187,6 +194,98 @@ const Index = () => {
             <DuoButton fullWidth onClick={() => showToast("Full width button clicked!")}>
               Full Width Button
             </DuoButton>
+          </div>
+
+          <DuoHeading level={3} size="md" className="mt-8 mb-4">New Button Variants</DuoHeading>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <DuoButton size="xs" onClick={() => showToast("Extra small button clicked!")}>
+              Extra Small Button
+            </DuoButton>
+            
+            <DuoButton padding="compact" onClick={() => showToast("Compact padding button clicked!")}>
+              Compact Padding
+            </DuoButton>
+            
+            <DuoButton size="sm" padding="compact" onClick={() => showToast("Small compact button clicked!")}>
+              Small Compact
+            </DuoButton>
+            
+            <DuoButton variant="primary" iconOnly icon={<Plus size={16} />} onClick={() => showToast("Icon only button clicked!")} />
+            
+            <DuoButton variant="danger" iconOnly icon={<Minus size={16} />} onClick={() => showToast("Icon only button clicked!")} />
+            
+            <DuoButton variant="success" iconOnly size="sm" icon={<Save size={14} />} onClick={() => showToast("Small icon only button clicked!")} />
+          </div>
+        </section>
+
+        {/* Checkbox and Radio Section */}
+        <section className="bg-white rounded-2xl p-8 shadow-md">
+          <DuoHeading level={2} size="lg" className="mb-6">
+            Checkboxes and Radios
+          </DuoHeading>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-6">
+              <DuoHeading level={3} size="md" className="mb-4">Checkboxes</DuoHeading>
+              
+              <DuoCheckbox 
+                label="Basic Checkbox"
+                checked={checkboxValue}
+                onCheckedChange={(checked) => setCheckboxValue(!!checked)}
+              />
+              
+              <DuoCheckbox 
+                label="Checkbox with Hint"
+                hint="This is a helpful description"
+                checked={false}
+              />
+              
+              <DuoCheckbox 
+                label="Checkbox with Error"
+                error="This field is required"
+                checked={false}
+              />
+              
+              <DuoCheckbox 
+                label="Disabled Checkbox"
+                disabled
+                checked={true}
+              />
+            </div>
+            
+            <div className="space-y-6">
+              <DuoHeading level={3} size="md" className="mb-4">Radio Buttons</DuoHeading>
+              
+              <DuoRadio
+                label="Favorite Language"
+                options={[
+                  { value: "option1", label: "Spanish" },
+                  { value: "option2", label: "French" },
+                  { value: "option3", label: "German" }
+                ]}
+                value={radioValue}
+                onValueChange={setRadioValue}
+              />
+              
+              <DuoRadio
+                label="Display Orientation"
+                orientation="horizontal"
+                options={[
+                  { value: "list", label: "List" },
+                  { value: "grid", label: "Grid" }
+                ]}
+                value="list"
+              />
+              
+              <DuoRadio
+                label="Radio with Error"
+                error="Please select an option"
+                options={[
+                  { value: "yes", label: "Yes" },
+                  { value: "no", label: "No" }
+                ]}
+              />
+            </div>
           </div>
         </section>
 

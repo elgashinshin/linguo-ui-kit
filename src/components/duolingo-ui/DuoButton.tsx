@@ -4,37 +4,47 @@ import { cn } from "@/lib/utils";
 
 type ButtonVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'neutral';
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
+type ButtonPadding = 'compact' | 'normal';
 
 interface DuoButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  padding?: ButtonPadding;
   fullWidth?: boolean;
   icon?: React.ReactNode;
   iconPosition?: 'left' | 'right';
+  iconOnly?: boolean;
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-duo-green text-white hover:bg-duo-lightGreen shadow-[0_2px_0_0_rgba(0,70,0,0.3)]',
-  secondary: 'bg-duo-purple text-white hover:bg-opacity-90 shadow-[0_2px_0_0_rgba(78,0,92,0.3)]',
-  success: 'bg-duo-blue text-white hover:bg-opacity-90 shadow-[0_2px_0_0_rgba(0,53,84,0.3)]',
-  warning: 'bg-duo-orange text-white hover:bg-opacity-90 shadow-[0_2px_0_0_rgba(122,61,0,0.3)]',
-  danger: 'bg-duo-red text-white hover:bg-opacity-90 shadow-[0_2px_0_0_rgba(103,0,0,0.3)]',
-  neutral: 'bg-gray-200 text-gray-800 hover:bg-gray-300 shadow-[0_2px_0_0_rgba(0,0,0,0.1)]',
+  primary: 'bg-duo-green text-white hover:bg-duo-lightGreen shadow-[0_2px_0_0_rgba(0,100,0,0.5)]',
+  secondary: 'bg-duo-purple text-white hover:bg-opacity-90 shadow-[0_2px_0_0_rgba(78,0,92,0.5)]',
+  success: 'bg-duo-blue text-white hover:bg-opacity-90 shadow-[0_2px_0_0_rgba(0,53,84,0.5)]',
+  warning: 'bg-duo-orange text-white hover:bg-opacity-90 shadow-[0_2px_0_0_rgba(122,61,0,0.5)]',
+  danger: 'bg-duo-red text-white hover:bg-opacity-90 shadow-[0_2px_0_0_rgba(103,0,0,0.5)]',
+  neutral: 'bg-gray-200 text-gray-800 hover:bg-gray-300 shadow-[0_2px_0_0_rgba(0,0,0,0.2)]',
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  xs: 'text-xs py-1 px-2',
-  sm: 'text-sm py-1.5 px-3',
-  md: 'text-base py-3 px-5',
-  lg: 'text-lg py-4 px-6',
+  xs: 'text-xs h-6',
+  sm: 'text-sm h-8',
+  md: 'text-base h-10',
+  lg: 'text-lg h-12',
+};
+
+const paddingStyles: Record<ButtonPadding, string> = {
+  compact: 'px-2',
+  normal: 'px-4',
 };
 
 const DuoButton = ({
   variant = 'primary',
   size = 'md',
+  padding = 'normal',
   fullWidth = false,
   icon,
   iconPosition = 'left',
+  iconOnly = false,
   className,
   children,
   ...props
@@ -45,6 +55,8 @@ const DuoButton = ({
         'duo-button font-bold rounded-xl transition-all duration-150 inline-flex items-center justify-center',
         variantStyles[variant],
         sizeStyles[size],
+        !iconOnly && paddingStyles[padding],
+        iconOnly && 'aspect-square',
         fullWidth ? 'w-full' : '',
         'hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_rgba(0,0,0,0.2)]',
         'active:translate-y-0.5 active:shadow-none',
@@ -52,9 +64,13 @@ const DuoButton = ({
       )}
       {...props}
     >
-      {icon && iconPosition === 'left' && <span className="mr-2 flex-shrink-0">{icon}</span>}
-      {children}
-      {icon && iconPosition === 'right' && <span className="ml-2 flex-shrink-0">{icon}</span>}
+      {icon && (iconPosition === 'left' || iconOnly) && 
+        <span className={cn("flex-shrink-0", !iconOnly && iconPosition === 'left' && "mr-2")}>{icon}</span>
+      }
+      {!iconOnly && children}
+      {icon && iconPosition === 'right' && !iconOnly && 
+        <span className="ml-2 flex-shrink-0">{icon}</span>
+      }
     </button>
   );
 };

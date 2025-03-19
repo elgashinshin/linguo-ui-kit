@@ -32,6 +32,9 @@ const FlashcardPractice = () => {
   const [completed, setCompleted] = useState(false);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
+  const [dragStartX, setDragStartX] = useState(0);
+  const [dragOffsetX, setDragOffsetX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     // In a real app, fetch from API or database
@@ -39,7 +42,9 @@ const FlashcardPractice = () => {
   }, []);
 
   const handleFlip = () => {
-    setIsFlipped(!isFlipped);
+    if (!isDragging) {
+      setIsFlipped(!isFlipped);
+    }
   };
 
   const handleSwipe = (dir: 'left' | 'right') => {
@@ -64,6 +69,7 @@ const FlashcardPractice = () => {
     setCompleted(false);
   };
 
+  // Touch events for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
   };
@@ -79,6 +85,40 @@ const FlashcardPractice = () => {
     } else if (touchEnd - touchStart > 100) {
       // Swiped right
       handleSwipe('right');
+    }
+  };
+
+  // Mouse events for desktop
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setDragStartX(e.clientX);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (isDragging) {
+      const offsetX = e.clientX - dragStartX;
+      setDragOffsetX(offsetX);
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (isDragging) {
+      if (dragOffsetX < -100) {
+        // Dragged left
+        handleSwipe('left');
+      } else if (dragOffsetX > 100) {
+        // Dragged right
+        handleSwipe('right');
+      }
+      setIsDragging(false);
+      setDragOffsetX(0);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (isDragging) {
+      setIsDragging(false);
+      setDragOffsetX(0);
     }
   };
 
@@ -157,7 +197,14 @@ const FlashcardPractice = () => {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
-          style={{ transformStyle: "preserve-3d" }}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
+          style={{ 
+            transformStyle: "preserve-3d",
+            transform: isDragging ? `translateX(${dragOffsetX}px) rotateY(${isFlipped ? '180deg' : '0'})` : (isFlipped ? 'rotateY(180deg)' : 'rotateY(0)')
+          }}
         >
           {/* Front */}
           <div 
@@ -169,7 +216,10 @@ const FlashcardPractice = () => {
             )}
             style={{ backfaceVisibility: "hidden" }}
           >
-            <DuoCard className="flex flex-col justify-center items-center h-full p-8">
+            <DuoCard 
+              className="flex flex-col justify-center items-center h-full p-8"
+              borderColor={isDragging && dragOffsetX > 50 ? 'green' : (isDragging && dragOffsetX < -50 ? 'red' : 'gray')}
+            >
               <DuoHeading level={2} size="xl" className="mb-6">
                 {currentCard.word}
               </DuoHeading>
@@ -190,7 +240,10 @@ const FlashcardPractice = () => {
               transform: "rotateY(180deg)"
             }}
           >
-            <DuoCard className="flex flex-col justify-center items-center h-full p-8">
+            <DuoCard 
+              className="flex flex-col justify-center items-center h-full p-8"
+              borderColor={isDragging && dragOffsetX > 50 ? 'green' : (isDragging && dragOffsetX < -50 ? 'red' : 'gray')}
+            >
               <DuoHeading level={2} size="xl" className="mb-6">
                 {currentCard.translation}
               </DuoHeading>
@@ -202,7 +255,8 @@ const FlashcardPractice = () => {
         </div>
       </div>
       
-      <style jsx global>{`
+      <style>
+        {`
         .backface-hidden {
           backface-visibility: hidden;
         }
@@ -224,7 +278,8 @@ const FlashcardPractice = () => {
         .swipe-right {
           animation: swipeRight 0.3s forwards;
         }
-      `}</style>
+        `}
+      </style>
     </div>
   );
 };
