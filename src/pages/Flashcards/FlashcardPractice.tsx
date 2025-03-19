@@ -6,7 +6,7 @@ import {
   DuoButton,
   DuoCard
 } from '@/components/duolingo-ui';
-import { ArrowRight, ThumbsUp, ThumbsDown, RotateCcw } from 'lucide-react';
+import { RotateCcw } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
 interface Flashcard {
@@ -30,6 +30,8 @@ const FlashcardPractice = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [direction, setDirection] = useState<'none' | 'left' | 'right'>('none');
   const [completed, setCompleted] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   useEffect(() => {
     // In a real app, fetch from API or database
@@ -60,6 +62,24 @@ const FlashcardPractice = () => {
     setIsFlipped(false);
     setDirection('none');
     setCompleted(false);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 100) {
+      // Swiped left
+      handleSwipe('left');
+    } else if (touchEnd - touchStart > 100) {
+      // Swiped right
+      handleSwipe('right');
+    }
   };
 
   if (flashcards.length === 0) {
@@ -116,29 +136,36 @@ const FlashcardPractice = () => {
         <DuoText color="muted">
           Card {currentIndex + 1} of {flashcards.length}
         </DuoText>
+        <DuoText color="muted" className="mt-2">
+          Swipe right if you know it, left if you don't
+        </DuoText>
       </div>
       
       <div 
         className={cn(
-          "relative h-80 w-full transition-transform duration-300",
-          direction === 'left' ? 'translate-x-[-100%] opacity-0' : 
-          direction === 'right' ? 'translate-x-[100%] opacity-0' : ''
+          "relative h-80 w-full transition-opacity duration-300",
+          direction === 'left' ? 'opacity-0' : 
+          direction === 'right' ? 'opacity-0' : ''
         )}
-        style={{ perspective: "1000px" }}
       >
         <div 
           className={cn(
             "relative w-full h-full transition-all duration-500 cursor-pointer",
-            isFlipped ? 'rotate-y-180' : ''
+            isFlipped ? '[transform:rotateY(180deg)]' : ''
           )}
           onClick={handleFlip}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
           style={{ transformStyle: "preserve-3d" }}
         >
           {/* Front */}
           <div 
             className={cn(
-              "absolute w-full h-full", 
-              isFlipped ? 'invisible' : ''
+              "absolute w-full h-full backface-hidden", 
+              isFlipped ? 'invisible' : '',
+              direction === 'left' ? 'swipe-left' : 
+              direction === 'right' ? 'swipe-right' : ''
             )}
             style={{ backfaceVisibility: "hidden" }}
           >
@@ -155,7 +182,7 @@ const FlashcardPractice = () => {
           {/* Back */}
           <div 
             className={cn(
-              "absolute w-full h-full", 
+              "absolute w-full h-full backface-hidden", 
               isFlipped ? '' : 'invisible'
             )}
             style={{ 
@@ -175,23 +202,29 @@ const FlashcardPractice = () => {
         </div>
       </div>
       
-      <div className="flex justify-center space-x-6 mt-8">
-        <DuoButton 
-          variant="danger" 
-          icon={<ThumbsDown size={18} />}
-          onClick={() => handleSwipe('left')}
-        >
-          Don't Know
-        </DuoButton>
-        
-        <DuoButton 
-          variant="success" 
-          icon={<ThumbsUp size={18} />}
-          onClick={() => handleSwipe('right')}
-        >
-          Got It
-        </DuoButton>
-      </div>
+      <style jsx global>{`
+        .backface-hidden {
+          backface-visibility: hidden;
+        }
+        @keyframes swipeLeft {
+          to {
+            transform: translateX(-100%);
+            opacity: 0;
+          }
+        }
+        @keyframes swipeRight {
+          to {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+        }
+        .swipe-left {
+          animation: swipeLeft 0.3s forwards;
+        }
+        .swipe-right {
+          animation: swipeRight 0.3s forwards;
+        }
+      `}</style>
     </div>
   );
 };

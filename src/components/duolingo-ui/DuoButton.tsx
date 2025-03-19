@@ -23,8 +23,8 @@ const variantStyles: Record<ButtonVariant, string> = {
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  xs: 'text-xs py-1 px-3',
-  sm: 'text-sm py-2 px-3',
+  xs: 'text-xs py-1 px-2',
+  sm: 'text-sm py-1.5 px-3',
   md: 'text-base py-3 px-5',
   lg: 'text-lg py-4 px-6',
 };
@@ -42,7 +42,7 @@ const DuoButton = ({
   return (
     <button
       className={cn(
-        'duo-button font-bold rounded-xl transition-all duration-150',
+        'duo-button font-bold rounded-xl transition-all duration-150 inline-flex items-center justify-center',
         variantStyles[variant],
         sizeStyles[size],
         fullWidth ? 'w-full' : '',
@@ -52,9 +52,9 @@ const DuoButton = ({
       )}
       {...props}
     >
-      {icon && iconPosition === 'left' && <span className="mr-2">{icon}</span>}
+      {icon && iconPosition === 'left' && <span className="mr-2 flex-shrink-0">{icon}</span>}
       {children}
-      {icon && iconPosition === 'right' && <span className="ml-2">{icon}</span>}
+      {icon && iconPosition === 'right' && <span className="ml-2 flex-shrink-0">{icon}</span>}
     </button>
   );
 };

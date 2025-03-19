@@ -80,7 +80,7 @@
 
 @layer components {
   .duo-button {
-    @apply font-bold py-3 px-5 rounded-xl shadow-duo transition-all duration-150;
+    @apply font-bold rounded-xl shadow-duo transition-all duration-150;
   }
   .duo-button:hover {
     @apply shadow-duo-hover -translate-y-0.5;
@@ -96,4 +96,36 @@
 /* Adding Duolingo color scheme for backgrounds */
 .bg-duo-softBlue {
   background-color: #e5f4ff;
+}
+
+/* Flashcard animation styles */
+[transform="rotateY(180deg)"] {
+  transform: rotateY(180deg);
+}
+
+.backface-hidden {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+@keyframes swipeLeft {
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes swipeRight {
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.swipe-left {
+  animation: swipeLeft 0.3s forwards;
+}
+
+.swipe-right {
+  animation: swipeRight 0.3s forwards;
 }

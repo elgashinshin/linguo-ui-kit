@@ -29,7 +29,7 @@ const DuoCard = ({
   return (
     <div
       className={cn(
-        'duo-card',
+        'duo-card bg-white rounded-2xl p-5 shadow-md border-2',
         borderColorStyles[borderColor],
         hover && 'hover:-translate-y-1 hover:shadow-lg cursor-pointer transition-all duration-200',
         className

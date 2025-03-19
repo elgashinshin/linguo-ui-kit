@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { 
   DuoInput, 
   DuoButton, 
-  DuoTextarea,
   DuoHeading,
   DuoText,
   DuoCard
@@ -69,7 +68,7 @@ const CreateFlashcards = () => {
         Create Flashcards
       </DuoHeading>
       
-      <DuoCard className="mb-8">
+      <DuoCard className="mb-8 p-6">
         <DuoHeading level={2} size="md" className="mb-4">
           Add New Flashcard
         </DuoHeading>
@@ -83,7 +82,7 @@ const CreateFlashcards = () => {
             fullWidth
           />
           
-          <DuoTextarea
+          <DuoInput
             label="Translation"
             value={translation}
             onChange={(e) => setTranslation(e.target.value)}
@@ -92,12 +91,13 @@ const CreateFlashcards = () => {
           />
         </div>
         
-        <div className="mt-4 flex justify-end">
+        <div className="mt-4">
           <DuoButton 
             variant="primary" 
             icon={<PlusCircle size={18} />} 
             onClick={handleAddFlashcard}
             disabled={!word.trim() || !translation.trim()}
+            fullWidth
           >
             Add Flashcard
           </DuoButton>
@@ -170,21 +170,17 @@ const CreateFlashcards = () => {
                   <div className="flex space-x-2 mt-4 md:mt-0">
                     <DuoButton 
                       variant="neutral" 
-                      size="sm" 
+                      size="xs" 
                       icon={<Edit size={16} />}
                       onClick={() => startEditing(card)}
-                    >
-                      Edit
-                    </DuoButton>
+                    />
                     
                     <DuoButton 
                       variant="danger" 
-                      size="sm" 
+                      size="xs" 
                       icon={<Trash2 size={16} />}
                       onClick={() => handleDeleteFlashcard(card.id)}
-                    >
-                      Delete
-                    </DuoButton>
+                    />
                   </div>
                 </>
               )}
