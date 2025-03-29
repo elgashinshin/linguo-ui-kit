@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   DuoHeading, 
   DuoText, 
@@ -11,12 +10,19 @@ import {
   DuoCharacter,
   DuoRadio,
   DuoProgress,
-  DuoSelect
+  DuoSelect,
+  DuoModal
 } from '@/components/duolingo-ui';
 import { Link } from 'react-router-dom';
-import { Home, Edit, Trash, Save, X, Settings, User, Globe } from 'lucide-react';
+import { Home, Edit, Trash, Save, X, Settings, User, Globe, AlertTriangle, CheckCircle, Info } from 'lucide-react';
 
 const UIShowcase = () => {
+  // Modal states
+  const [defaultModalOpen, setDefaultModalOpen] = useState(false);
+  const [warningModalOpen, setWarningModalOpen] = useState(false);
+  const [dangerModalOpen, setDangerModalOpen] = useState(false);
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
+  
   return (
     <div className="container mx-auto py-8 px-4">
       <div className="flex justify-between items-center mb-8">
@@ -77,6 +83,140 @@ const UIShowcase = () => {
           <div className="mb-8">
             <DuoButton variant="primary" fullWidth>Full Width Button</DuoButton>
           </div>
+        </DuoCard>
+      </section>
+
+      {/* Modal Section */}
+      <section className="mb-12">
+        <DuoHeading level={2} size="lg" className="mb-4">Modals</DuoHeading>
+        <DuoCard className="p-6">
+          <DuoHeading level={3} size="md" className="mb-4">Modal Examples</DuoHeading>
+          <div className="flex flex-wrap gap-4 mb-8">
+            <DuoButton variant="primary" onClick={() => setDefaultModalOpen(true)}>
+              Open Default Modal
+            </DuoButton>
+            <DuoButton variant="warning" onClick={() => setWarningModalOpen(true)}>
+              Open Warning Modal
+            </DuoButton>
+            <DuoButton variant="danger" onClick={() => setDangerModalOpen(true)}>
+              Open Danger Modal
+            </DuoButton>
+            <DuoButton variant="success" onClick={() => setSuccessModalOpen(true)}>
+              Open Success Modal
+            </DuoButton>
+          </div>
+          
+          {/* Default Modal */}
+          <DuoModal
+            isOpen={defaultModalOpen}
+            onClose={() => setDefaultModalOpen(false)}
+            title="Default Modal"
+            description="This is a description for the default modal"
+          >
+            <div className="space-y-4">
+              <DuoText>This is the content of the modal. You can put any components inside.</DuoText>
+              <DuoInput label="Sample Input" placeholder="Type something..." />
+            </div>
+            
+            <div className="flex justify-end gap-3 mt-6">
+              <DuoButton 
+                variant="neutral" 
+                onClick={() => setDefaultModalOpen(false)}
+              >
+                Cancel
+              </DuoButton>
+              <DuoButton 
+                variant="primary" 
+                onClick={() => setDefaultModalOpen(false)}
+              >
+                Confirm
+              </DuoButton>
+            </div>
+          </DuoModal>
+          
+          {/* Warning Modal */}
+          <DuoModal
+            isOpen={warningModalOpen}
+            onClose={() => setWarningModalOpen(false)}
+            title="Warning"
+            variant="warning"
+            description="Please review the changes before proceeding"
+          >
+            <div className="flex items-start gap-4">
+              <AlertTriangle className="text-duo-orange h-10 w-10 flex-shrink-0" />
+              <div>
+                <DuoText>This action may have consequences. Please make sure you've reviewed all changes before continuing.</DuoText>
+              </div>
+            </div>
+            
+            <div className="flex justify-end gap-3 mt-6">
+              <DuoButton 
+                variant="neutral" 
+                onClick={() => setWarningModalOpen(false)}
+              >
+                Cancel
+              </DuoButton>
+              <DuoButton 
+                variant="warning" 
+                onClick={() => setWarningModalOpen(false)}
+              >
+                Proceed Anyway
+              </DuoButton>
+            </div>
+          </DuoModal>
+          
+          {/* Danger Modal */}
+          <DuoModal
+            isOpen={dangerModalOpen}
+            onClose={() => setDangerModalOpen(false)}
+            title="Delete Account"
+            variant="danger"
+          >
+            <div className="flex items-start gap-4">
+              <Trash className="text-duo-red h-10 w-10 flex-shrink-0" />
+              <div>
+                <DuoHeading level={3} size="sm" className="mb-2">Are you sure you want to delete your account?</DuoHeading>
+                <DuoText>This action cannot be undone. All your data will be permanently removed.</DuoText>
+              </div>
+            </div>
+            
+            <div className="flex justify-end gap-3 mt-6">
+              <DuoButton 
+                variant="neutral" 
+                onClick={() => setDangerModalOpen(false)}
+              >
+                Cancel
+              </DuoButton>
+              <DuoButton 
+                variant="danger" 
+                onClick={() => setDangerModalOpen(false)}
+              >
+                Delete Account
+              </DuoButton>
+            </div>
+          </DuoModal>
+          
+          {/* Success Modal */}
+          <DuoModal
+            isOpen={successModalOpen}
+            onClose={() => setSuccessModalOpen(false)}
+            title="Success"
+            variant="success"
+          >
+            <div className="flex flex-col items-center text-center py-4">
+              <CheckCircle className="text-duo-green h-16 w-16 mb-4" />
+              <DuoHeading level={3} size="md" className="mb-2">Lesson Completed!</DuoHeading>
+              <DuoText>You've successfully completed the lesson and earned 20 XP!</DuoText>
+              
+              <DuoButton 
+                variant="primary" 
+                className="mt-6"
+                onClick={() => setSuccessModalOpen(false)}
+              >
+                Continue
+              </DuoButton>
+            </div>
+          </DuoModal>
         </DuoCard>
       </section>
 

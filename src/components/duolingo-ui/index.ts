@@ -15,3 +15,4 @@ export { default as DuoText } from './DuoText';
 export { default as DuoHeading } from './DuoHeading';
 export { default as DuoOAuthButton } from './DuoOAuthButton';
 export { default as DuoTextarea } from './DuoTextarea';
+export { default as DuoModal } from './DuoModal';
