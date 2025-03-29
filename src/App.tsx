@@ -12,6 +12,7 @@ import TranslationPractice from "./pages/Flashcards/TranslationPractice";
 import NotFound from "./pages/Error/NotFound";
 import Forbidden from "./pages/Error/Forbidden";
 import ErrorPage from "./pages/Error/ErrorPage";
+import UIShowcase from "./pages/UI/UIShowcase";
 import DuoNavbar from "./components/duolingo-ui/DuoNavbar";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/create-flashcards" element={<CreateFlashcards />} />
             <Route path="/flashcard-practice" element={<FlashcardPractice />} />
             <Route path="/translation-practice" element={<TranslationPractice />} />
+            <Route path="/ui" element={<UIShowcase />} />
             <Route path="/error" element={<ErrorPage />} />
             <Route path="/forbidden" element={<Forbidden />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

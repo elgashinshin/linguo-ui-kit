@@ -7,7 +7,7 @@ import { Home, AlertTriangle } from 'lucide-react';
 const ErrorPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4">
-      <DuoCharacter size="xl" mood="surprised" />
+      <DuoCharacter size="xl" mood="sad" />
       
       <div className="text-center max-w-md mt-8">
         <div className="mb-4 flex justify-center">
