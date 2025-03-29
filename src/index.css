@@ -106,6 +106,8 @@
 .backface-hidden {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
 @keyframes swipeLeft {
@@ -129,3 +131,13 @@
 .swipe-right {
   animation: swipeRight 0.3s forwards;
 }
+
+/* Fix for card flip animation */
+[style*="transform: rotateY(180deg)"] {
+  transform: rotateY(180deg);
+}
+
+[style*="transform: rotateY(0)"] {
+  transform: rotateY(0);
+}
+

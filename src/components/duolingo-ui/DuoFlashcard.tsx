@@ -56,10 +56,11 @@ const DuoFlashcard = ({
     }, 300);
   };
 
-  // Mouse events for desktop
+  // Mouse events for desktop - improved for better responsiveness
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
     setDragStartX(e.clientX);
+    e.preventDefault(); // Prevent text selection during drag
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -71,11 +72,12 @@ const DuoFlashcard = ({
 
   const handleMouseUp = () => {
     if (isDragging) {
-      if (dragOffsetX < -75) {
-        // Dragged left - reduced threshold
+      // Reduced threshold for better responsiveness
+      if (dragOffsetX < -50) {
+        // Dragged left
         handleSwipe('left');
-      } else if (dragOffsetX > 75) {
-        // Dragged right - reduced threshold
+      } else if (dragOffsetX > 50) {
+        // Dragged right
         handleSwipe('right');
       }
       setIsDragging(false);
@@ -102,11 +104,12 @@ const DuoFlashcard = ({
   };
 
   const handleTouchEnd = () => {
-    if (dragOffsetX < -75) {
-      // Swiped left - reduced threshold for easier swiping
+    // Reduced threshold for easier swiping
+    if (dragOffsetX < -50) {
+      // Swiped left
       handleSwipe('left');
-    } else if (dragOffsetX > 75) {
-      // Swiped right - reduced threshold for easier swiping
+    } else if (dragOffsetX > 50) {
+      // Swiped right
       handleSwipe('right');
     }
     setDragOffsetX(0);
@@ -123,7 +126,6 @@ const DuoFlashcard = ({
       <div 
         className={cn(
           "relative w-full h-full transition-all duration-500 cursor-pointer select-none z-20",
-          isFlipped ? '[transform:rotateY(180deg)]' : '',
           direction === 'left' ? 'swipe-left' : direction === 'right' ? 'swipe-right' : ''
         )}
         onClick={handleFlip}
@@ -141,14 +143,12 @@ const DuoFlashcard = ({
       >
         {/* Front */}
         <div 
-          className={cn(
-            "absolute w-full h-full backface-hidden", 
-            isFlipped ? 'invisible' : ''
-          )}
+          className="absolute w-full h-full backface-hidden"
+          style={{ transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0)' }}
         >
           <DuoCard 
             className="flex flex-col justify-center items-center h-full p-8"
-            borderColor={isDragging && dragOffsetX > 50 ? 'green' : (isDragging && dragOffsetX < -50 ? 'red' : borderColor)}
+            borderColor={isDragging && dragOffsetX > 30 ? 'green' : (isDragging && dragOffsetX < -30 ? 'red' : borderColor)}
           >
             {front}
           </DuoCard>
@@ -156,17 +156,12 @@ const DuoFlashcard = ({
         
         {/* Back */}
         <div 
-          className={cn(
-            "absolute w-full h-full backface-hidden", 
-            isFlipped ? '' : 'invisible'
-          )}
-          style={{ 
-            transform: "rotateY(180deg)"
-          }}
+          className="absolute w-full h-full backface-hidden"
+          style={{ transform: 'rotateY(180deg)' }}
         >
           <DuoCard 
             className="flex flex-col justify-center items-center h-full p-8"
-            borderColor={isDragging && dragOffsetX > 50 ? 'green' : (isDragging && dragOffsetX < -50 ? 'red' : borderColor)}
+            borderColor={isDragging && dragOffsetX > 30 ? 'green' : (isDragging && dragOffsetX < -30 ? 'red' : borderColor)}
           >
             {back}
           </DuoCard>
