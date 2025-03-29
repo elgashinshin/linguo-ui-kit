@@ -23,7 +23,7 @@ const DuoCheckbox = ({
     <div className={cn("duo-checkbox flex items-start space-x-2", className)}>
       <Checkbox
         id={checkboxId}
-        className="h-5 w-5 mt-0.5 rounded-sm border-2 border-gray-300 text-duo-green data-[state=checked]:border-duo-green"
+        className="h-5 w-5 mt-0.5 rounded-[2px] border-2 border-gray-300 text-duo-green data-[state=checked]:border-duo-green"
         {...props}
       />
       

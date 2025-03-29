@@ -17,12 +17,12 @@ interface DuoButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-duo-green text-white hover:bg-duo-lightGreen shadow-[0_2px_0_0_#417505]',
-  secondary: 'bg-duo-purple text-white hover:bg-opacity-90 shadow-[0_2px_0_0_#9c55cc]',
-  success: 'bg-duo-blue text-white hover:bg-opacity-90 shadow-[0_2px_0_0_#0784b5]',
-  warning: 'bg-duo-orange text-white hover:bg-opacity-90 shadow-[0_2px_0_0_#cc7200]',
-  danger: 'bg-duo-red text-white hover:bg-opacity-90 shadow-[0_2px_0_0_#c13030]',
-  neutral: 'bg-gray-200 text-gray-800 hover:bg-gray-300 shadow-[0_2px_0_0_#a0a0a0]',
+  primary: 'bg-duo-green text-white hover:bg-duo-lightGreen shadow-[0_2px_0_0_#417505] hover:shadow-[0_4px_0_0_#417505]',
+  secondary: 'bg-duo-purple text-white hover:bg-opacity-90 shadow-[0_2px_0_0_#9c55cc] hover:shadow-[0_4px_0_0_#9c55cc]',
+  success: 'bg-duo-blue text-white hover:bg-opacity-90 shadow-[0_2px_0_0_#0784b5] hover:shadow-[0_4px_0_0_#0784b5]',
+  warning: 'bg-duo-orange text-white hover:bg-opacity-90 shadow-[0_2px_0_0_#cc7200] hover:shadow-[0_4px_0_0_#cc7200]',
+  danger: 'bg-duo-red text-white hover:bg-opacity-90 shadow-[0_2px_0_0_#c13030] hover:shadow-[0_4px_0_0_#c13030]',
+  neutral: 'bg-gray-200 text-gray-800 hover:bg-gray-300 shadow-[0_2px_0_0_#a0a0a0] hover:shadow-[0_4px_0_0_#a0a0a0]',
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
@@ -58,8 +58,7 @@ const DuoButton = ({
         !iconOnly && paddingStyles[padding],
         iconOnly && 'aspect-square',
         fullWidth ? 'w-full' : '',
-        'hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_rgba(0,0,0,0.2)]',
-        'active:translate-y-0.5 active:shadow-none',
+        'hover:-translate-y-0.5',
         className
       )}
       {...props}

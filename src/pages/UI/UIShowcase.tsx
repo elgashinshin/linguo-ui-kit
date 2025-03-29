@@ -10,10 +10,11 @@ import {
   DuoCard, 
   DuoCharacter,
   DuoRadio,
-  DuoProgress
+  DuoProgress,
+  DuoSelect
 } from '@/components/duolingo-ui';
 import { Link } from 'react-router-dom';
-import { Home, Edit, Trash, Save, X, Settings } from 'lucide-react';
+import { Home, Edit, Trash, Save, X, Settings, User, Globe } from 'lucide-react';
 
 const UIShowcase = () => {
   return (
@@ -104,6 +105,52 @@ const UIShowcase = () => {
             ]}
             value="option1"
           />
+        </DuoCard>
+
+        <DuoCard className="p-6 mb-6">
+          <DuoHeading level={3} size="md" className="mb-4">Select Dropdown</DuoHeading>
+          <div className="flex flex-col gap-6">
+            <DuoSelect 
+              label="Default Select" 
+              placeholder="Choose an option..."
+              options={[
+                { value: "option1", label: "Option 1" },
+                { value: "option2", label: "Option 2" },
+                { value: "option3", label: "Option 3" }
+              ]}
+            />
+            <DuoSelect 
+              label="With Icon" 
+              placeholder="Select language..."
+              icon={<Globe size={18} />}
+              options={[
+                { value: "en", label: "English" },
+                { value: "fr", label: "French" },
+                { value: "es", label: "Spanish" }
+              ]}
+            />
+            <DuoSelect 
+              label="With Error" 
+              placeholder="Select user..."
+              error="Please select a user" 
+              icon={<User size={18} />}
+              options={[
+                { value: "user1", label: "User 1" },
+                { value: "user2", label: "User 2" },
+                { value: "user3", label: "User 3" }
+              ]}
+            />
+            <DuoSelect 
+              label="With Hint" 
+              placeholder="Select option..." 
+              hint="Select your preferred option" 
+              options={[
+                { value: "option1", label: "Option 1" },
+                { value: "option2", label: "Option 2" },
+                { value: "option3", label: "Option 3" }
+              ]}
+            />
+          </div>
         </DuoCard>
 
         <DuoCard className="p-6">
